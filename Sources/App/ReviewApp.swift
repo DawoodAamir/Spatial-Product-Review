@@ -34,7 +34,7 @@ struct ReviewWorkspace: View {
       }
       .navigationTitle(showArchive ? "Archive" : "Products")
       .safeAreaInset(edge: .bottom) {
-        Toggle("Show archive", isOn: $showArchive).toggleStyle(.switch).padding()
+        Toggle("Show archive", isOn: $showArchive).toggleStyle(.switch).accessibilityIdentifier("showArchive").padding()
           .onChange(of: showArchive) { model.selectedID = nil }
       }
       .navigationSplitViewColumnWidth(min: 210, ideal: 240)

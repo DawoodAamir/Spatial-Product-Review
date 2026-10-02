@@ -23,7 +23,7 @@ import XCTest
     let marked = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == 1 OR value == '1'"), object: resolved)
     XCTAssertEqual(XCTWaiter.wait(for: [marked], timeout: 10), .completed)
     app.buttons["Archive product"].click()
-    app.switches["Show archive"].click()
+    app.descendants(matching: .any)["showArchive"].click()
     XCTAssertTrue(row.waitForExistence(timeout: 10), app.debugDescription); row.click()
     XCTAssertTrue(app.buttons["Restore product"].waitForExistence(timeout: 10), app.debugDescription)
     app.buttons["Restore product"].click()
