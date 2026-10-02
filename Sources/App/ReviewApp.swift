@@ -8,7 +8,7 @@ import UniformTypeIdentifiers
   var body: some SwiftUI.Scene {
     Window("Spatial Product Review", id: "workspace") {
       ReviewWorkspace(model: model).frame(minWidth: 900, minHeight: 620)
-    }.defaultSize(width: 1180, height: 780)
+    }.defaultSize(width: 980, height: 660)
   }
 }
 
