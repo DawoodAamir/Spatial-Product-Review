@@ -17,6 +17,7 @@ struct ReviewWorkspace: View {
   @State private var importing = false
   @State private var choosingDevice = false
   @State private var showArchive = false
+  @State private var showInspector = true
   @State private var modelURL: URL?
   @State private var exporting = false
   @State private var exportDocument = ReviewDocument()
@@ -40,7 +41,7 @@ struct ReviewWorkspace: View {
       .navigationSplitViewColumnWidth(min: 210, ideal: 240)
     } detail: {
       if let review = model.selected {
-        HSplitView {
+        GeometryReader { geometry in
           VStack(spacing: 0) {
             if let modelURL { ModelPreview(url: modelURL).frame(maxWidth: .infinity, maxHeight: .infinity) }
             else { ProgressView("Loading model").frame(maxWidth: .infinity, maxHeight: .infinity) }
@@ -49,8 +50,7 @@ struct ReviewWorkspace: View {
               Spacer()
               Text("Drag to rotate · Scroll to zoom")
             }.font(.caption).foregroundStyle(.secondary).padding()
-          }.frame(minWidth: 350)
-          ReviewInspector(review: review, model: model).frame(minWidth: 280, idealWidth: 310, maxWidth: 360)
+          }.frame(width: geometry.size.width, height: geometry.size.height)
         }
         .navigationTitle(review.title)
         .task(id: review.id) { modelURL = nil; modelURL = await model.store.modelURL(for: review.id) }
@@ -65,7 +65,18 @@ struct ReviewWorkspace: View {
         }
       }
     }
+    .inspector(isPresented: $showInspector) {
+      if let review = model.selected {
+        ReviewInspector(review: review, model: model).inspectorColumnWidth(min: 260, ideal: 290, max: 360)
+      } else {
+        ContentUnavailableView("Select a product", systemImage: "cube")
+          .inspectorColumnWidth(min: 260, ideal: 290, max: 360)
+      }
+    }
     .toolbar {
+      ToolbarItem(placement: .primaryAction) {
+        Button("Review details", systemImage: "sidebar.right") { showInspector.toggle() }
+      }
       ToolbarItem(placement: .primaryAction) {
         Button("Import model", systemImage: "square.and.arrow.down") { importing = true }
           .disabled(model.isBusy).keyboardShortcut("o")
