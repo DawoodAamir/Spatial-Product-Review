@@ -2,6 +2,8 @@
 
 A Mac workspace for reviewing USDZ products, recording decisions, and presenting a model on Apple Vision Pro through Spatial Preview.
 
+![Native product review workspace](Docs/Workspace.png)
+
 ## Try it
 
 Open **Spatial Product Review.xcodeproj** in Xcode 27 and run the **Spatial Product Review** scheme on macOS 27. The Mac target uses local ad-hoc signing; no developer team is embedded.
